@@ -24,7 +24,7 @@ def admin_kb():
     kb = InlineKeyboardBuilder()
     kb.button(text="📋 Сегодня", callback_data=f"adm:day:{today.isoformat()}")
     kb.button(text="📋 Завтра", callback_data=f"adm:day:{(today + timedelta(days=1)).isoformat()}")
-    kb.button(text="📊 Статистика за 30 дней", callback_data="adm:stats")
+    kb.button(text="📊 Статистика", callback_data="adm:stats")
     kb.button(text="📥 Выгрузка в Excel", callback_data="adm:export")
     kb.button(text="🚫 Выходные дни", callback_data="adm:block")
     kb.adjust(2, 1, 1, 1)
@@ -68,21 +68,26 @@ async def day_schedule(cb: CallbackQuery):
 
 @router.callback_query(F.data == "adm:stats")
 async def stats(cb: CallbackQuery):
-    today = date.today()
-    rows = db.bookings_between((today - timedelta(days=30)).isoformat(), today.isoformat())
+    today = date.today().isoformat()
+    rows = db.bookings_between((date.today() - timedelta(days=30)).isoformat(),
+                               (date.today() + timedelta(days=30)).isoformat())
     if not rows:
-        await cb.message.edit_text("За последние 30 дней записей не было.", reply_markup=back_kb())
+        await cb.message.edit_text("За последние 30 дней и на месяц вперёд записей нет.", reply_markup=back_kb())
         return await cb.answer()
-    revenue = sum(SERVICES[r["service"]][1] for r in rows)
+    past = [r for r in rows if r["day"] < today]
+    upcoming = [r for r in rows if r["day"] >= today]
+    earned = sum(SERVICES[r["service"]][1] for r in past)
+    expected = sum(SERVICES[r["service"]][1] for r in upcoming)
     by_master = Counter(MASTERS[r["master"]]["name"] for r in rows)
     by_service = Counter(SERVICES[r["service"]][0] for r in rows)
     ratings = [r["rating"] for r in rows if r["rating"]]
     avg = f"{sum(ratings) / len(ratings):.1f} ⭐ ({len(ratings)} оценок)" if ratings else "пока нет"
     clients = len({r["user_id"] for r in rows})
     text = (
-        "📊 Статистика за 30 дней\n\n"
-        f"Записей: {len(rows)}\nКлиентов: {clients}\nВыручка: ≈{revenue} ₽\n"
-        f"Средний чек: ≈{revenue // len(rows)} ₽\nСредняя оценка: {avg}\n\n"
+        "📊 Статистика\n\n"
+        f"✅ Визитов за 30 дней: {len(past)} · ≈{earned} ₽\n"
+        f"📅 Предстоящих записей: {len(upcoming)} · ожидается ≈{expected} ₽\n\n"
+        f"Клиентов: {clients}\nСредний чек: ≈{(earned + expected) // len(rows)} ₽\nСредняя оценка: {avg}\n\n"
         "По мастерам:\n" + "\n".join(f"• {n}: {c}" for n, c in by_master.most_common()) +
         "\n\nПопулярные услуги:\n" + "\n".join(f"• {n}: {c}" for n, c in by_service.most_common())
     )
