@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Барбершоп «Лезвие»</title>
+<meta name="description" content="Мужские стрижки и оформление бороды. Онлайн-запись через Telegram за 30 секунд.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f3ee; --surface: #ffffff; --text: #1c1a17; --muted: #6b645a;
+    --accent: #b8741a; --accent-ink: #ffffff; --line: #e4ddd2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141210; --surface: #1e1b18; --text: #f1ece4; --muted: #a59c8f;
+      --accent: #e0a04a; --accent-ink: #141210; --line: #2e2a25;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141210; --surface: #1e1b18; --text: #f1ece4; --muted: #a59c8f;
+    --accent: #e0a04a; --accent-ink: #141210; --line: #2e2a25;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, sans-serif; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, .logo { font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: .02em; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .logo { font-size: 22px; font-weight: 700; }
+  .logo span { color: var(--accent); }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 15px; }
+  nav a:hover { color: var(--text); }
+  .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); padding: 14px 28px;
+         border-radius: 8px; font-weight: 600; text-decoration: none; transition: transform .15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .hero { padding: 72px 0 88px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1.05; margin-bottom: 20px; }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+  .hero p { color: var(--muted); font-size: 18px; margin-bottom: 32px; max-width: 460px; }
+  .hero-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+  .stat { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .stat:last-child { border: 0; }
+  .stat b { font-family: Oswald, sans-serif; font-size: 28px; color: var(--accent); }
+  section { padding: 64px 0; }
+  h2 { font-size: 36px; margin-bottom: 32px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
+  .card h3 { font-size: 19px; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 15px; margin-bottom: 18px; }
+  .price { font-family: Oswald, sans-serif; font-size: 26px; }
+  .steps { counter-reset: s; }
+  .steps .card::before { counter-increment: s; content: "0" counter(s); font-family: Oswald, sans-serif;
+                         font-size: 40px; color: var(--accent); display: block; margin-bottom: 8px; }
+  .cta { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 48px 32px; text-align: center; }
+  .cta p { color: var(--muted); margin: 0 auto 28px; max-width: 480px; }
+  footer { padding: 40px 0; color: var(--muted); font-size: 14px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 760px) {
+    nav { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 40px 0 56px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">Лез<span>вие</span></div>
+    <nav><a href="#services">Услуги</a><a href="#how">Как записаться</a><a href="#contacts">Контакты</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Стрижка, после которой <em>хочется</em> в зеркало</h1>
+      <p>Мужские стрижки и борода от мастеров с опытом от 5 лет. Запись онлайн за 30 секунд — без звонков и ожидания.</p>
+      <a class="btn" href="#book">Записаться в Telegram</a>
+    </div>
+    <div class="hero-card">
+      <div class="stat"><span>Довольных клиентов</span><b>3 200+</b></div>
+      <div class="stat"><span>Средняя оценка</span><b>4.9</b></div>
+      <div class="stat"><span>Работаем ежедневно</span><b>10–20</b></div>
+    </div>
+  </div>
+
+  <section id="services">
+    <h2>Услуги и цены</h2>
+    <div class="grid">
+      <div class="card"><h3>Мужская стрижка</h3><p>Консультация, мытьё головы, стрижка и укладка.</p><div class="price">1 200 ₽</div></div>
+      <div class="card"><h3>Оформление бороды</h3><p>Форма, контуры опасной бритвой, горячее полотенце.</p><div class="price">800 ₽</div></div>
+      <div class="card"><h3>Стрижка + борода</h3><p>Полный образ за один визит — выгоднее на 200 ₽.</p><div class="price">1 800 ₽</div></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>Как записаться</h2>
+    <div class="grid steps">
+      <div class="card"><h3>Откройте бота</h3><p>Нажмите кнопку — Telegram откроется сам.</p></div>
+      <div class="card"><h3>Выберите время</h3><p>Бот покажет только свободные окна на неделю вперёд.</p></div>
+      <div class="card"><h3>Приходите</h3><p>Мастер получит запись сразу. Отменить можно в один клик.</p></div>
+    </div>
+  </section>
+
+  <section id="book">
+    <div class="cta">
+      <h2>Свободные окна есть уже сегодня</h2>
+      <p>Запишитесь сейчас — бот подберёт удобное время и напомнит о визите.</p>
+      <a class="btn" href="https://t.me/" target="_blank" rel="noopener">Открыть бота записи</a>
+    </div>
+  </section>
+
+  <footer id="contacts">
+    <span>© Барбершоп «Лезвие» — демонстрационный проект</span>
+    <span>ул. Примерная, 1 · ежедневно 10:00–20:00</span>
+  </footer>
+</div>
+</body>
+</html>
