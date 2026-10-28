@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 ADMIN_ID = int(os.getenv("ADMIN_ID", "0") or 0)
+# Прокси для доступа к Telegram (VPN-клиенты обычно дают http://127.0.0.1:порт)
+PROXY = os.getenv("PROXY") or os.getenv("HTTPS_PROXY") or ""
 
 BUSINESS_NAME = "Барбершоп «Лезвие»"
 ADDRESS = "ул. Примерная, 1"

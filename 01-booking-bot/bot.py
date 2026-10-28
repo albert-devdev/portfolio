@@ -10,6 +10,7 @@ import logging
 import re
 
 from aiogram import Bot, Dispatcher, F, Router
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
@@ -19,7 +20,7 @@ import admin
 import db
 import keyboards as kb
 import reminders
-from config import ADDRESS, ADMIN_ID, BOT_TOKEN, BUSINESS_NAME, MASTERS, PHONE, SERVICES
+from config import ADDRESS, ADMIN_ID, BOT_TOKEN, BUSINESS_NAME, MASTERS, PHONE, PROXY, SERVICES
 
 router = Router()
 
@@ -220,7 +221,7 @@ async def main():
         raise SystemExit("Укажите BOT_TOKEN в файле .env (см. .env.example)")
     logging.basicConfig(level=logging.INFO)
     db.init()
-    bot = Bot(BOT_TOKEN)
+    bot = Bot(BOT_TOKEN, session=AiohttpSession(proxy=PROXY) if PROXY else None)
     dp = Dispatcher()
     dp.include_routers(admin.router, router)
     asyncio.create_task(reminders.loop(bot))
