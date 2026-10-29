@@ -5,7 +5,7 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 import db
-from config import DAYS_AHEAD, MASTERS, SERVICES, WORK_HOURS
+from config import DAYS_AHEAD, EMOJI, MASTERS, SERVICES, WORK_HOURS
 
 WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
 
@@ -29,8 +29,8 @@ def fmt_day(day: str) -> str:
 def summary(data: dict) -> str:
     title, price = SERVICES[data["service"]]
     lines = [
-        f"💈 Мастер: {MASTERS[data['master']]['name']}",
-        f"✂️ {title} — {price} ₽",
+        f"{EMOJI} Мастер: {MASTERS[data['master']]['name']}",
+        f"🧾 {title} — {price} ₽",
         f"📅 {fmt_day(data['day'])} в {data['slot']}",
     ]
     if data.get("name"):
@@ -52,7 +52,7 @@ def main_menu():
     kb = InlineKeyboardBuilder()
     kb.button(text="📅 Записаться", callback_data="menu:book")
     kb.button(text="🗂 Мои записи", callback_data="menu:my")
-    kb.button(text="💈 О нас", callback_data="menu:about")
+    kb.button(text=f"{EMOJI} О нас", callback_data="menu:about")
     kb.adjust(1, 2)
     return kb.as_markup()
 

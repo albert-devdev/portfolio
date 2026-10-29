@@ -20,7 +20,7 @@ import admin
 import db
 import keyboards as kb
 import reminders
-from config import ADDRESS, ADMIN_ID, BOT_TOKEN, BUSINESS_NAME, MASTERS, PHONE, PROXY, SERVICES
+from config import ADDRESS, ADMIN_ID, BOT_TOKEN, BUSINESS_NAME, EMOJI, MASTERS, PHONE, PROXY, SERVICES
 
 router = Router()
 
@@ -60,7 +60,7 @@ async def about(cb: CallbackQuery):
     masters = "\n".join(f"• {m['name']} — {m['about']}" for m in MASTERS.values())
     prices = "\n".join(f"• {title} — {price} ₽" for title, price in SERVICES.values())
     await cb.message.edit_text(
-        f"💈 {BUSINESS_NAME}\n📍 {ADDRESS}\n📞 {PHONE}\n\nМастера:\n{masters}\n\nЦены:\n{prices}",
+        f"{EMOJI} {BUSINESS_NAME}\n📍 {ADDRESS}\n📞 {PHONE}\n\nМастера:\n{masters}\n\nЦены:\n{prices}",
         reply_markup=kb.back_home(),
     )
     await cb.answer()
